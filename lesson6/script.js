@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const catalog = document.getElementById('catalog_content')
-    const basket = document.getElementById('basket_content')
+    const basket = document.getElementById('basket')
+    const basket_content = document.getElementById('basket_content')
+    const basket_status = document.getElementById('basketStatus')
 
     const catalog_arr = [
         {
@@ -30,6 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ]
     const basket_arr = []
 
+    function set_status() {
+        let result = basket_arr.length > 0 ? `В корзине ${basket_arr.reduce((acc,item) => acc += item.quantity, 0 )} товаров 
+                                                на сумму ${basket_arr.reduce((acc,item) => acc += item.price * item.quantity, 0 )} руб` : 'Пуста'
+        basket_status.innerHTML = result
+    }
+
     function set_catalog(items) {
         items.forEach(item => {
             let element = document.createElement('div')
@@ -49,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function reset_basket(items) {
-        basket.innerHTML = ""
+        basket_content.innerHTML = ""
         items.forEach(item => {
             let element = document.createElement('div')
             element.classList.add('purchase')
@@ -60,11 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="purchase_total">${item.price * item.quantity} р.</div>
                 <button class="delButton" data-id="${item.id}">Удалить</button>
                 `
-            basket.appendChild(element)
+            basket_content.appendChild(element)
         })
     }
 
     set_catalog(catalog_arr)
+    set_status()
 
     catalog.addEventListener('click', event => {
         if (event.target.classList.contains('buyButton')) {
@@ -79,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 purchase.quantity += 1
             }
             reset_basket(basket_arr)
+            set_status()
         }
     })
 
@@ -88,7 +98,34 @@ document.addEventListener("DOMContentLoaded", () => {
             const elemId = basket_arr.findIndex(elem => elem.id == id)
             basket_arr.splice(elemId, 1)
             reset_basket(basket_arr)
+            set_status()
         }
     })
 
 })
+
+function changeSlide(isForward) {
+    const basket = document.getElementById('basket')
+    const sections = basket.querySelectorAll('section')
+    for (let i = 0; i < sections.length; i++) {
+        if (!sections[i].classList.contains('display__none')) {
+            if (isForward) {
+                if (i < sections.length - 1) {
+                    sections[i].classList.add('display__none')
+                    sections[i+1].classList.remove('display__none')
+                }
+            } 
+            else {
+                if (i != 0) {
+                    sections[i].classList.add('display__none')
+                    sections[i-1].classList.remove('display__none')
+                }
+            }
+            break
+        }
+    }
+}
+
+function tog_basket() {
+    document.getElementById('basket').classList.toggle('display__none')
+}
