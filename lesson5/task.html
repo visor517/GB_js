@@ -1,0 +1,118 @@
+<!--
+1. Создать функцию, генерирующую шахматную доску. При этом можно использовать любые
+html-теги по своему желанию. Доска должна быть разлинована соответствующим образом, 
+т.е. чередовать черные и белые ячейки. Строки должны нумероваться числами от 1 до 8,
+столбцы – латинскими буквами A, B, C, D, E, F, G, H.
+2. Заполнить созданную таблицу буквами, отвечающими за шахматную фигуру, например К
+– король, Ф – ферзь и т.п., причем все фигуры должны стоять на своих местах и быть
+соответственно черными и белыми.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task1</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    #desk {
+        display: flex;
+        flex-wrap: wrap;
+        width: 400px;
+        height: 400px;
+        border: 3px solid black;
+        background-color: teal;
+    }
+
+    .desk_item {
+        width: 10%;
+        height: 10%;
+        color: black;
+        display: flex;
+        justify-content: center;
+    }
+
+    .desk_item span {
+        align-self: center;
+    }
+
+    .desk_item__black {
+        background-color: black;
+    }
+
+    .desk_team__black {
+        color: tomato;
+    }
+
+    .desk_team__white {
+        color: white;
+    }
+</style>
+
+<body>
+    <div id="desk"></div>
+
+    <script>
+        window.onload = function () {
+            const desk = document.getElementById('desk')
+            const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+            const line = ['R', 'N', 'B', 'Q', '👑', 'B', 'N', 'R']
+            isBlack = false
+            for (let x = 0; x <= 9; x++) {
+                for (let y = 0; y <= 9; y++) {
+                    let item = document.createElement('div')
+                    item.classList.add('desk_item')
+                    if ((isBlack) & (y != 0) & (y != 9) & (x != 0) & (x != 9)) item.classList.add('desk_item__black')
+                    if ((y == 0) & (x != 0) & (x != 9)) {
+                        let mark_n = document.createElement('span')
+                        mark_n.classList.add('desk_mark__n')
+                        mark_n.innerText = 9 - x
+                        item.appendChild(mark_n)
+                    }
+                    if ((x == 9) & (y != 0) & (y != 9)) {
+                        let mark_l = document.createElement('span')
+                        mark_l.classList.add('desk_mark__l')
+                        mark_l.innerText = letters[y - 1]
+                        item.appendChild(mark_l)
+                    }
+                    if ((x == 2) & (y != 0) & (y != 9)) {
+                        let team_b = document.createElement('span')
+                        team_b.classList.add('desk_team__black')
+                        team_b.innerText = 'P'
+                        item.appendChild(team_b)
+                    }
+                    if ((x == 1) & (y != 0) & (y != 9)) {
+                        let team_b = document.createElement('span')
+                        team_b.classList.add('desk_team__black')
+                        team_b.innerText = line[y - 1]
+                        item.appendChild(team_b)
+                    }
+                    if ((x == 7) & (y != 0) & (y != 9)) {
+                        let team_b = document.createElement('span')
+                        team_b.classList.add('desk_team__white')
+                        team_b.innerText = 'P'
+                        item.appendChild(team_b)
+                    }
+                    if ((x == 8) & (y != 0) & (y != 9)) {
+                        let team_b = document.createElement('span')
+                        team_b.classList.add('desk_team__white')
+                        team_b.innerText = line[y - 1]
+                        item.appendChild(team_b)
+                    }
+                    desk.appendChild(item)
+                    isBlack = !isBlack
+                }
+                isBlack = !isBlack
+            }
+        }
+    </script>
+</body>
+
+</html>
