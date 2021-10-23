@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Корзина</title>
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div>Магазин</div>
+            <div id="basketInfo" onclick=tog_basket()>
+                Корзина: <div id="basketStatus"></div>
+            </div>
+        </header>
+        <section class="catalog section">
+            <h1>Каталог</h1>
+            <div id="catalog_content"></div>
+        </section>
+
+        <div id="basket" class="display__none">
+            <section>
+                <h2>Состав карзины</h2>
+                <div id="basket_content"></div>
+            </section>
+            <section class="display__none">
+                <h2>Адрес доставки</h2>
+                <textarea></textarea>
+            </section>
+            <section class="display__none">
+                <h2>Комментарий</h2>
+                <textarea></textarea>
+            </section>
+            <div class="basket_nav">
+                <button onclick=changeSlide(false)>Назад</button>
+                <button onclick=changeSlide(true)>Дальше</button>
+                <button onclick=tog_basket()>Закрыть</button>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>
